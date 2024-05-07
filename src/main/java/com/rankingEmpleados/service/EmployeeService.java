@@ -2,6 +2,7 @@ package com.rankingEmpleados.service;
 
 import com.rankingEmpleados.customException.EmployeeNotFoundExcepcion;
 import com.rankingEmpleados.model.Employee;
+import com.rankingEmpleados.model.Role;
 import com.rankingEmpleados.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,12 +30,16 @@ public class EmployeeService {
     }
 
     //Modificar empleado
-    public void updateEmployee(long id, String newName, String newPass) {
+    public void updateEmployee(
+            long id, String newName, String newPass, Role rol, String username, int cita) {
         Employee employee = employeeRepository.findById(id).orElse(null);
 
         if (employee != null) {
             employee.setName(newName);
             employee.setPassword(newPass);
+            employee.setRol(rol);
+            employee.setUsername(username);
+            employee.setNumberOfAppointments(cita);
             employeeRepository.save(employee);
         } else {
             throw new EmployeeNotFoundExcepcion("Empleado no encontrado con el ID: " +

@@ -2,6 +2,7 @@ package com.rankingEmpleados.controller;
 
 import com.rankingEmpleados.customException.EmployeeNotFoundExcepcion;
 import com.rankingEmpleados.model.Employee;
+import com.rankingEmpleados.model.Role;
 import com.rankingEmpleados.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,10 +31,16 @@ public class EmployeeController {
     }
 
     @PutMapping("/modificar-empleado")
-    public ResponseEntity<String> updateEmployee(
-            @RequestParam Long id, @RequestParam String newName, @RequestParam String newPass) {
+    public ResponseEntity<String> updateEmployee( //ACTUALIZO EL EMPLEADO PERO CON PARAMETROS. LUEGO LO DEBO CAMBIAR
+            @RequestParam Long id,
+            @RequestParam String newName,
+            @RequestParam String newPass,
+            @RequestParam Role rol,
+            @RequestParam String username,
+            @RequestParam int cita) {
+
         try {
-            employeeService.updateEmployee(id, newName, newPass);
+            employeeService.updateEmployee(id, newName, newPass, rol, username, cita);
             return new ResponseEntity<>("Empleado actualizado exitosamente",
                     HttpStatus.OK);
         } catch (EmployeeNotFoundExcepcion e) {
